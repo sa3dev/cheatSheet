@@ -1,0 +1,25 @@
+.grid-container {
+  margin: 20px;
+}
+
+.wrapper {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: minmax(100px, auto);
+  gap: 2rem 2rem;
+}
+
+.dashboard-card {
+  height: 100px;
+  cursor: pointer;
+}
+
+.mat-card {
+  background-color: lightblue;
+  background-image: linear-gradient(
+    
+  );
+}
+.dashboard-card-content {
+  text-align: center;
+}
