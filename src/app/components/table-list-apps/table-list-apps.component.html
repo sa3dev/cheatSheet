@@ -1,0 +1,29 @@
+<section>
+    <h2>List of applications or poc created <small>(not finished)</small>: </h2>
+    <p>( Please be indulgent with some beginner project :) ) </p>
+    <button *ngIf="limit" (click)="limit = false"> More ?  </button>
+
+    <div class="apps"> 
+
+        
+        <div  *ngFor="let item of( repos$ | async);  let index = index; ">
+
+            <ng-container *ngIf=" limit === true ; else elseBlock">
+                <div class="app" *ngIf="index < 11">
+                    <h3>{{ item.full_name.split('/')[1] }}</h3>
+                    <a target="blank" [href]="item.html_url">{{ item.full_name }}</a>
+                </div>
+            </ng-container>
+
+            <ng-template #elseBlock>
+                <div class="app" >
+                    <h3>{{ item.full_name.split('/')[1] }}</h3>
+                    <a [href]="item.html_url">{{ item.full_name }}</a>
+                </div>
+            </ng-template>
+           
+        </div>
+        
+        
+    </div>
+</section>

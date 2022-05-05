@@ -3,7 +3,8 @@
   <a routerLink="/home">Retour au menu</a>
 
   <div class="wrapper">
-    <mat-card class="dashboard-card" *ngFor="let card of cards" [routerLink]="['/home' , card.title ]" >
+    
+    <mat-card class="dashboard-card" *ngFor="let card of cards" [routerLink]="['/dashboard/language/' , card.title.toLowerCase()]" >
       <mat-card-header>
         <mat-card-title>
           {{card.title}}

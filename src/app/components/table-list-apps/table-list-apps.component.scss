@@ -1,0 +1,41 @@
+section {
+    h2 , p {
+        display: flex;
+        justify-content: center;
+
+    }
+    button{
+        display: block;
+        margin: 0 auto;
+        padding: 0.8rem 2rem;
+        font-size: 19px;
+    }
+    .apps {
+        padding: 2rem;
+    
+        margin: 1rem 3rem;
+        display: grid;
+        grid-template-columns: repeat(auto-fit , minmax(15rem , 1fr ));
+        grid-gap: 3rem;
+        
+        .app {
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            border: 1px solid grey;
+            border-radius: 5px;
+            padding: 1rem;
+            box-shadow: 10px 10px 5px 0px grey;
+        }
+
+        .app button:hover {
+            cursor: pointer;
+        }
+
+        .app:hover {
+           transform: scale(1.1);
+        }
+    }
+}

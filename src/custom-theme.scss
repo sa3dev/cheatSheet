@@ -1,0 +1,101 @@
+@use '@angular/material' as mat;
+@include mat.core();
+
+$indigo-palette: (
+ 50: #daeef5,
+ 100: #a3d5e5,
+ 200: #63b9d5,
+ 300: #009ec6,
+ 400: #008dc0,
+ 500: #007bb8 ,
+ 600: #006fac , 
+ 700: #005f9b,
+ 800: #004f89,
+ 900: #00326a, 
+ contrast: (
+   50: rgba(black, 0.87),
+   100: rgba(black, 0.87),
+   200: rgba(black, 0.87),
+   300: rgba(black, 0.87),
+   400: rgba(black, 0.87),
+   500: rgba(black, 0.87),
+   600: rgba(black, 0.87),
+   700: rgba(black, 0.87),
+   800: rgba(black, 0.87),
+   900: rgba(black, 0.87) 
+ )
+);
+
+$pink-palette: (
+ 50: #f1dfdd,
+ 100: #e5b3a3,
+ 200:#d18369 ,
+ 300:#be5331 ,
+ 400:#b12e01 ,
+ 500: #a40000 ,
+ 600:  #9c0000 ,
+ 700:  #920000,
+ 800: #850000 ,
+ 900: #6f0000 ,
+
+ contrast: (
+   50: rgba(black, 0.87),
+   100: rgba(black, 0.87),
+   200: rgba(black, 0.87),
+   300: rgba(black, 0.87),
+   400: rgba(black, 0.87),
+   500: rgba(black, 0.87),
+   600: rgba(black, 0.87),
+   700: rgba(black, 0.87),
+   800: rgba(black, 0.87),
+   900: rgba(black, 0.87) 
+ )
+);
+
+$red-palette: (
+ 50: #e5a3d5,
+ 100: #db7dc4,
+ 200:#d35bb8 ,
+ 300: #d35eb8,
+ 400:#ca43ae ,
+ 500:#bc3db8 ,
+ 600: #bc3da8,
+ 700: #aa35a0,
+ 800: #9a3098,
+ 900:  #7f258b,
+ contrast: (
+   50: rgba(black, 0.87),
+   100: rgba(black, 0.87),
+   200: rgba(black, 0.87),
+   300: rgba(black, 0.87),
+   400: rgba(black, 0.87),
+   500: rgba(black, 0.87),
+   600: rgba(black, 0.87),
+   700: rgba(black, 0.87),
+   800: rgba(black, 0.87),
+   900: rgba(black, 0.87) 
+ )
+);
+
+
+
+$my-custom-primary: mat.define-palette(mat.$indigo-palette , 300);
+$myc-accent: mat.define-palette(mat.$pink-palette , 400);
+$myc-warn: mat.define-palette(mat.$red-palette , 400);
+
+$myc-theme: mat.define-light-theme((
+ color: (
+   primary: $my-custom-primary,
+   accent: $myc-accent,
+   warn: $myc-warn,
+ )
+));
+
+// @include mat.all-component-themes($myc-theme);
+
+@include mat.core-theme($myc-theme);
+
+// Emit styles for MatButton based on `$c-theme`. Because the configuration
+// passed to `define-light-theme` omits typography, `button-theme` will not
+// emit any typography styles.
+@include mat.button-theme($myc-theme);
