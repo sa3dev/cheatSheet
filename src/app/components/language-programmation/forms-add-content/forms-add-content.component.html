@@ -1,26 +1,22 @@
 <section>
 
+    <h2>{{ lang }}</h2>
+
     <div>
-        <mat-radio-group
-            aria-labelledby="example-radio-group-label"
-            class="example-radio-group"
-            [(ngModel)]="choices">
-        <mat-radio-button class="example-radio-button" *ngFor="let choice of choices" [value]="choice">
-                {{choice}}
-            </mat-radio-button>
-            </mat-radio-group>
+        <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group" [(ngModel)]="choices">
+
+            <mat-radio-button class="example-radio-button" *ngFor="let choice of choices" [value]="choice"> {{choice}} </mat-radio-button>
+
+        </mat-radio-group>
     </div>
 
     <div>
-        <form [formGroup]="addcontent" (ngSubmit)="onSubmit()" >
+        <form [formGroup]="addcontentForm" (ngSubmit)="onSubmit()" >
 
             <label for="name">Name: </label>
             <input id="name" type="text" formControlName="name">
 
-            <label for="name">Name: </label>
-            <input id="name" type="text" formControlName="name">
-
-            <button type="submit" [disabled]="!addcontent.valid">Submit</button>
+            <button type="submit" [disabled]="!addcontentForm.valid">Submit</button>
         </form>
     </div>
 

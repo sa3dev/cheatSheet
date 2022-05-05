@@ -1,3 +1,4 @@
+import { LanguageProgramationService } from './../../../service/language-programation.service';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { FormControl , FormGroup } from '@angular/forms';
@@ -8,7 +9,7 @@ import { FormControl , FormGroup } from '@angular/forms';
 })
 export class FormsAddContentComponent implements OnInit {
 
-  addcontent: FormGroup = new FormGroup({
+  addcontentForm: FormGroup = new FormGroup({
     name: new FormControl('')
   })
   lang: string = ''
@@ -16,8 +17,8 @@ export class FormsAddContentComponent implements OnInit {
 
   choices: string[] = ['Nav contenent' , 'Body content']
 
-  constructor(private activeRoute: ActivatedRoute) {
-    this.activeRoute.params.subscribe(param => {
+  constructor(private router: ActivatedRoute , private langProgService: LanguageProgramationService) {
+    this.router.params.subscribe(param => {
       this.lang = (param['language'])
     })
   }
@@ -27,11 +28,20 @@ export class FormsAddContentComponent implements OnInit {
 
   onSubmit() {
 
-    this.wrapperForm.form = this.addcontent
+    const formValue = this.addcontentForm.value
     this.wrapperForm.language = this.lang
-    // this.wrapperForm.mode = this.
+    this.wrapperForm.formContent = formValue
 
-    console.warn(this.addcontent)
     console.warn(this.wrapperForm)
+
+    this.langProgService.createResourceWithForm(this.wrapperForm).subscribe(
+      mess => {
+        console.log(mess)
+      },
+      error => {
+        console.error(error)
+      }
+    )
+
   }
 }

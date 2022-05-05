@@ -32,20 +32,9 @@
             ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/purple-green.css",
-              "src/styles.scss",
-              {
-                "input": "./src/custom-theme.scss",
-                "inject": true,
-                "bundleName": "external-module"
-              }
+              "src/styles.scss"              
             ],
-            "scripts": [
-              {
-                "input": "./src/custom-theme.scss",
-                "inject": true,
-                "bundleName": "external-module"
-              }
-            ]
+            "scripts": []
           },
           "configurations": {
             "production": {

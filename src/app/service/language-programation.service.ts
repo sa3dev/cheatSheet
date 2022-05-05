@@ -10,6 +10,7 @@ import { Injectable } from '@angular/core';
 export class LanguageProgramationService {
 
   private LANGUAGE_NAV: string = "/language/nav/"
+
   error: Subject<HttpErrorResponse> = new Subject<HttpErrorResponse>()
   error$: Observable<any> = this.error.asObservable()
 
@@ -32,5 +33,16 @@ export class LanguageProgramationService {
   getcontentForLanguage(language: string) {
     return language
 
+  }
+
+
+  createResourceWithForm(wraperForm: Object ) {
+
+    console.log(wraperForm);
+    
+    // /language/:choice/:language
+    return this.http.post(
+      environment.url_api + '/language/nav/javascript' , wraperForm
+    )
   }
 }
