@@ -18,34 +18,27 @@ app.use(function (req, res, next) {
     next();
 });
 
-// app.get('/language/nav/:lang' , async function(req, res ) {
-//     try {
-//         if(req.params.lang) {
-//             await fs.readFile( `./resources/${req.params.lang}/nav.json` , 'utf-8', (err , data)=> {
-//                 data ? res.status(200).json(JSON.parse(data)) : res.status(400).send({error: 'file not found'})
-//             })
-//         }   
-//     } catch (error) {
-//         res.status(400).send({error: 'file not found'})
-//     }
-   
-// })
 
-app.post('/language/:choice/:language' , function(req , res ){
+app.post('/language/:choice/:language' ,async function(req , res ){
     try {
 
-        const body = req.body
-        const choiceNavOrContent = req.params.choice
+        const { body , choiceOfContent , language } = req.body
         let filename = ''
-
-        choiceNavOrContent === 'nav' ? filename = 'nav.json' : filename = 'content.json'
+        choiceOfContent === 'nav' ? filename = 'nav.json' : filename = 'content.json'
         
-        const url = filename ? `./resources/${req.params.language}/${filename}` : `./resources/${req.params.language}/nouveaufichier2.json`
+        const url = `./resources/${language}/${filename}`
 
-        fs.writeFile(url , JSON.stringify(req.body.formContent) , (err) => {
+        const dataAll = await fse.readFile( url , 'utf-8')
+
+        const rest = JSON.parse(dataAll)
+
+        rest.push(body)
+
+        fs.writeFile(url , JSON.stringify(rest) ,  (err) => {
             if(err) throw err
             res.status(200).send({status: 'CREATED' , message: 'File created' });
         })
+
     } catch (error) {
         res.status(404).send({status: 'NOT CREATED' , message: error.message })
     }
