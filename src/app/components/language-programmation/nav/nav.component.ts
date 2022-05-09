@@ -1,41 +1,9 @@
-import { Observable, catchError, of } from 'rxjs';
+import { Observable, catchError, of, Subscription, takeUntil, Subject } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { LanguageProgramationService } from './../../../service/language-programation.service';
-import { Component, OnInit, Output ,  EventEmitter, AfterViewInit  } from '@angular/core';
+import { Component, OnInit, Output ,  EventEmitter, AfterViewInit, Input  } from '@angular/core';
 import { NavSchema } from './../models/navSchema';
 
-const test = [
-  { 
-    title: 'TemplateRef',
-    content: 'Template Référence sert a récuperer un élément HTML',
-    hash: '#templateref',
-  },
-  { 
-    title: 'Router',
-    content: 'Template Référence sert a récuperer un élément HTML',
-    hash: '#router',
-  },
-  { 
-    title: 'Navigation',
-    content: 'Template Référence sert a récuperer un élément HTML',
-    hash: '#router',
-  },
-  { 
-    title: 'Guard',
-    content: 'Template Référence sert a récuperer un élément HTML',
-    hash: '#router',
-  },
-  { 
-    title: 'Resolver',
-    content: 'Template Référence sert a récuperer un élément HTML',
-    hash: '#router',
-  },
-  { 
-    title: 'HttpCall',
-    content: 'Template Référence sert a récuperer un élément HTML',
-    hash: '#router',
-  }
-]
 
 @Component({
   selector: 'app-nav',
@@ -44,41 +12,24 @@ const test = [
 })
 export class NavComponent implements OnInit , AfterViewInit{
 
-  anchors: Observable<NavSchema[]> | null; 
-  languageNav: string =''
-
-  error = null
-
-  error$
-
+  @Input()
+  anchor: NavSchema | any; 
 
   @Output()
   anchorToGo =  new EventEmitter<string>();
 
   constructor(
-    private langProgramSerivce: LanguageProgramationService,
-    private  activeRoute: ActivatedRoute
     ) {
-    // init anchors
-    this.anchors = null
-
-    // get language from route param
-    this.activeRoute.params.subscribe((param)=> {
-      this.languageNav = param['language']
-    })
-
-    this.error$ = this.langProgramSerivce.error$
-    
   }
 
   ngOnInit(): void {
   }
 
-  ngAfterViewInit(): void {
-    this.anchors = this.langProgramSerivce.getNavForLanguage(this.languageNav)
+  ngAfterViewInit(): void {  
   }
 
   anchortoEmit(value: string) {
     this.anchorToGo.emit(value.toLocaleLowerCase())
   }
+
 }

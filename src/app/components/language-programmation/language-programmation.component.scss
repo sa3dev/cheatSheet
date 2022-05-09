@@ -22,11 +22,10 @@ section {
     .content {
         display: flex;
 
-        .nav {
+        .nav { 
             flex: 1;
             padding: 1rem;
         }
-
         .content-body {
             padding: 1rem;
             flex: 3;

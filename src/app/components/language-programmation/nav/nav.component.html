@@ -1,9 +1,4 @@
-<ul>
-    <li *ngFor="let item of anchors | async">
-        <a (click)="anchortoEmit(item.title)">{{ item.title }}</a>
-    </li>
 
-    <div *ngIf="error$ | async as err">
-        {{ err.error.error }}
-    </div>
-</ul>
+<li>
+    <a (click)="anchortoEmit(anchor.title)">{{ anchor.title }}</a>        
+</li>

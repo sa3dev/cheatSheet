@@ -4,7 +4,7 @@
         <h2>{{ title.charAt(0).toUpperCase() + title.slice(1) }}</h2>
         
         <div class="links">
-            <a routerLink="/dashboard">Retour au dashboard</a>
+            <a routerLink="/dashboard" (click)="returnTODash()">Retour au dashboard</a>
             <a [routerLink]="['/dashboard/content' , title]">Ajouter du contenu pour {{ title }}</a>
         </div>
 
@@ -12,16 +12,19 @@
 
   
     <div class="content">
-        <div class="nav">
-            <app-nav (anchorToGo)="goToAnchor($event)"></app-nav>
+        <div class="nav" >
+            <ul>
+                <app-nav *ngFor="let item of langProgramSerivce.navContent$ | async" [anchor]="item" (anchorToGo)="goToAnchor($event)"></app-nav>
+            </ul>
         </div>
-        <div class="content-body">
-            <h1 id="test">Content here..</h1>
+        <div class="content-body" >
+            <div *ngFor="let item of langProgramSerivce.languagecontent$ | async">
+                <h2 id="{{item.linkToNav.split('#')[1]}}">{{ item.linkToNav }} </h2>
+                <p>
+                    {{item.content}}
+                </p>
+            </div>
         </div>
     </div>
-
-    <!-- <div class="error">
-        <h2>File not found</h2>
-    </div> -->
 
 </section>

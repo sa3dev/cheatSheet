@@ -1,7 +1,7 @@
 import { LanguageProgramationService } from './../../../service/language-programation.service';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { FormControl , FormGroup } from '@angular/forms';
+import { FormControl , FormGroup, Validators } from '@angular/forms';
 @Component({
   selector: 'app-forms-add-content',
   templateUrl: './forms-add-content.component.html',
@@ -9,13 +9,19 @@ import { FormControl , FormGroup } from '@angular/forms';
 })
 export class FormsAddContentComponent implements OnInit {
 
-  addcontentForm: FormGroup = new FormGroup({
-    name: new FormControl('')
+  addcontentForNav: FormGroup = new FormGroup({
+    title: new FormControl('', Validators.required),
+    content: new FormControl('' ,  Validators.required),
+    hash:  new FormControl('#'),
   })
-  lang: string = ''
-  wrapperForm: any = {}
+  addcontentForNContent: FormGroup = new FormGroup({
+    linkToNav: new FormControl('') ,
+    content: new FormControl('')
+  })
 
-  choices: string[] = ['Nav contenent' , 'Body content']
+  choiceOfcontent = 'nav'
+
+  lang: string = ''
 
   constructor(private router: ActivatedRoute , private langProgService: LanguageProgramationService) {
     this.router.params.subscribe(param => {
@@ -26,22 +32,47 @@ export class FormsAddContentComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onSubmit() {
+  onSubmit(choiceOfcontent: string) {
 
-    const formValue = this.addcontentForm.value
-    this.wrapperForm.language = this.lang
-    this.wrapperForm.formContent = formValue
+    if(choiceOfcontent === 'nav') {
+      this.addcontentForNav.patchValue({
+        hash: '#'+ this.addcontentForNav.value.title
+      })
 
-    console.warn(this.wrapperForm)
-
-    this.langProgService.createResourceWithForm(this.wrapperForm).subscribe(
-      mess => {
-        console.log(mess)
-      },
-      error => {
-        console.error(error)
+      if(this.addcontentForNav.valid) {
+        this.langProgService.createResourceWithForm(this.addcontentForNav.value , choiceOfcontent , this.lang ).subscribe(
+          message => {
+            console.log(message)
+          },
+          error => {
+            console.error(error)
+          }
+        )
       }
-    )
+    
+      this.addcontentForNav.reset()
+            
+    }
+
+    if(choiceOfcontent === 'content') {
+
+      if(this.addcontentForNContent.valid ) {
+
+        // this.langProgService.createResourceWithForm().subscribe(
+        //   mess => {
+        //     console.log(mess)
+        //   },
+        //   error => {
+        //     console.error(error)
+        //   }
+        // )
+
+      }
+      this.addcontentForNContent.reset()
+ 
+    }
+
+
 
   }
 }

@@ -1,27 +1,46 @@
 <section style="padding: 1rem;">
+    <a [routerLink]="['/dashboard/language/' , lang]">Retour </a>
 
-    <h2>{{ lang }}</h2>
+    <h2>Ajouter contenu pour: {{ lang.charAt(0).toUpperCase() + lang.slice(1) }}</h2>
 
-    <div>
-        <!-- <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group" [(ngModel)]="choices">
+    <div class="wrapper-form">
 
-            <mat-radio-button class="example-radio-button" *ngFor="let choice of choices" [value]="choice"> {{choice}} </mat-radio-button>
+        <select [(ngModel)]="choiceOfcontent" >
+            <option value="--">--</option>
+            <option value="nav">Navigation</option>
+            <option value="content">Contenu </option>
+        </select>
 
-        </mat-radio-group> -->
+        <ng-container *ngIf="choiceOfcontent === 'nav'" >
+            <form [formGroup]="addcontentForNav" (ngSubmit)="onSubmit(choiceOfcontent)" >
+                <label for="title">Titre: </label>
+                <input id="title" type="text" formControlName="title">
+
+                <label for="content">Contenu: </label>                    
+                <textarea formControlName="content" id="content" cols="30" rows="10"></textarea>
+
+                <button type="submit" [disabled]="!addcontentForNav.valid">Ajouter</button>
+            </form>
+        </ng-container>
+
+        <ng-container *ngIf="choiceOfcontent === 'content'" >
+            <form [formGroup]="addcontentForNContent" (ngSubmit)="onSubmit(choiceOfcontent)" >
+
+                <label for="linkToNav">LinkToNav : </label>
+                <input id="linkToNav" type="text" formControlName="linkToNav">
+
+                <label for="content">Contenus: </label>
+                <textarea formControlName="content" id="content" cols="30" rows="10"></textarea>
+
+                <button type="submit" [disabled]="!addcontentForNContent.valid">Ajouter</button>
+            </form>
+
+        </ng-container>
+        
     </div>
 
     <div>
-        <form [formGroup]="addcontentForm" (ngSubmit)="onSubmit()" >
-
-            <label for="name">Name: </label>
-            <input id="name" type="text" formControlName="name">
-
-            <button type="submit" [disabled]="!addcontentForm.valid">Submit</button>
-        </form>
-    </div>
-
-    <div>
-        Partie Json 
+        ( Partie Json visualizer TO DO )
     </div>
       
 
