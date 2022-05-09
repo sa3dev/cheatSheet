@@ -1,10 +1,10 @@
 [
     {
-        "linkToNav": "#templateref",
+        "linkToNav": "#Scope",
         "content": "Template variables help you use data from one part of a template in another part of the template. Use template variables to perform tasks such as respond to user input or finely tune your application's forms."
     },
     {
-        "linkToNav": "#router",
+        "linkToNav": "#Variable",
         "content": "Template variables help you use data from one part of a template in another part of the template. Use template variables to perform tasks such as respond to user input or finely tune your application's forms."
     }
 ]

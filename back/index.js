@@ -1,4 +1,5 @@
 const fs      = require('fs');
+const fse = require('fs/promises');
 const express = require('express');
 const app     = express(); 
 const http    = require('http');
@@ -17,18 +18,18 @@ app.use(function (req, res, next) {
     next();
 });
 
-app.get('/language/nav/:lang' , async function(req, res ) {
-    try {
-        if(req.params.lang) {
-            await fs.readFile( `./resources/${req.params.lang}/nav.json` , 'utf-8', (err , data)=> {
-                data ? res.status(200).json(JSON.parse(data)) : res.status(400).send({error: 'file not found'})
-            })
-        }   
-    } catch (error) {
-        res.status(400).send({error: 'file not found'})
-    }
+// app.get('/language/nav/:lang' , async function(req, res ) {
+//     try {
+//         if(req.params.lang) {
+//             await fs.readFile( `./resources/${req.params.lang}/nav.json` , 'utf-8', (err , data)=> {
+//                 data ? res.status(200).json(JSON.parse(data)) : res.status(400).send({error: 'file not found'})
+//             })
+//         }   
+//     } catch (error) {
+//         res.status(400).send({error: 'file not found'})
+//     }
    
-})
+// })
 
 app.post('/language/:choice/:language' , function(req , res ){
     try {
@@ -51,6 +52,33 @@ app.post('/language/:choice/:language' , function(req , res ){
 
 })
 
+
+app.get('/language/:language' , async function(req , res) {
+
+    try {
+        const language = req.params.language ? req.params.language : res.status(400).send({error: 'Language not provided'})
+        
+        let data = {}
+        
+        try {
+            data.nav =  await fse.readFile(`./resources/${language}/nav.json`, { encoding: 'utf8' });
+            data.content =  await fse.readFile(`./resources/${language}/content.json`, { encoding: 'utf8' } );
+        } catch (error) {
+           res.status(400).send({error: "File not found" , detail: error})
+        }
+    
+        data.nav = JSON.parse(data.nav)
+        data.content = JSON.parse(data.content)
+
+        res.status(200).send({
+            data
+        })
+      
+
+    } catch (error) {
+        
+    }
+})
 server.listen(3000 , ()=>{
     console.log('app listening on port 3000..')
 });
